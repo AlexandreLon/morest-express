@@ -104,6 +104,34 @@ class IndexController {
 }
 ```
 
+or global middleware for all route 
+
+```ts
+const morest = new Morest()
+
+morest.use(HelloMiddleware)
+
+morest.run(3000, () => {
+    console.log("Listening at 3000")
+})
+
+```
+
+Possibility to add other middle like json-parser or cors : 
+
+```ts
+const morest = new Morest()
+
+morest.use(bodyParser.json())
+morest.use(cors())
+
+morest.run(3000, () => {
+    console.log("Listening at 3000")
+})
+
+
+```
+
 ### List of decorators
 
 | Decorators | Usage | Description |

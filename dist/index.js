@@ -21,6 +21,16 @@ class Morest {
     set(name, value) {
         this.app.set(name, value);
     }
+    use(handle) {
+        try {
+            const MiddlewareModel = handle;
+            global_1.app.use(new MiddlewareModel().run);
+        }
+        catch (e) {
+            const h = handle;
+            global_1.app.use(h);
+        }
+    }
     run(options, callback) {
         let port = 8080;
         let cb = () => { };

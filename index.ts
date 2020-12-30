@@ -2,7 +2,7 @@ import {GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping} from '
 import {Controller} from './decorators/Controller'
 import {app, router} from './engine/global'
 import {showAllRoutes} from './utils/showAll'
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { MiddlewareController, MiddlewareRoute } from './decorators/Middleware';
 import MiddlewareModel from './interfaces/MiddlewareModel';
 
@@ -11,12 +11,26 @@ interface Options {
     callback?: () => void,
 }
 
+interface IMiddlewareModel {
+    new (): MiddlewareModel;
+}
+
 class Morest {
 
     app = app
 
     set(name: string, value: any) {
         this.app.set(name, value)
+    }
+
+    use(handle: any|IMiddlewareModel) {
+        try {
+            const MiddlewareModel = handle as IMiddlewareModel;
+            app.use(new MiddlewareModel().run)
+        } catch(e) {
+            const h = handle as NextFunction;
+            app.use(h)
+        }
     }
 
     run(options?: Options|string|number, callback?: () => void) {

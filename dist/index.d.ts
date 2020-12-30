@@ -7,9 +7,13 @@ interface Options {
     port: string | number;
     callback?: () => void;
 }
+interface IMiddlewareModel {
+    new (): MiddlewareModel;
+}
 declare class Morest {
     app: import("express-serve-static-core").Express;
     set(name: string, value: any): void;
+    use(handle: any | IMiddlewareModel): void;
     run(options?: Options | string | number, callback?: () => void): void;
     showAllRoutes(): string[];
 }
