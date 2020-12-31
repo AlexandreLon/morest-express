@@ -146,6 +146,46 @@ morest.run(3000, () => {
 | MiddlewareController | @MiddlewareController(Middleware) | Set a middle on the controller, each route will have a middleware. The middleware must be a class inheritance MiddlewareModel 
 | MiddlewareRoute | @MiddlewareRoute(Middleware) | Set a middle on the route. The middleware must be a class inheritance MiddlewareModel 
 
+### Morest-cli
+
+You can also use the cli to generate middleware and controller. 
+
+#### To generate a controller : 
+
+```bash
+$ npx morest-express --controller <path> 
+```
+
+You can add a `--resources` flag to generate also all resources route
+
+```bash
+$ npx morest-express --controller <path> --resources
+```
+
+| Method | URI         | Action      | 
+| ------ | ----------- | ----------- | 
+| GET    | /           | index       | 
+| GET    | /:id        | show        | 
+| GET    | /create     | create      | 
+| POST   | /           | store       | 
+| GET    | /:id/edit   | edit        | 
+| PUT    | /:id        | update      | 
+| DELETE | /:id        | delete      | 
+
+#### To generate a middleware : 
+
+```bash
+$ npx morest-express --middleware <path> 
+```
+
+#### Path
+
+The path must be like `path.of.the.file`
+
+Will be generate :
+- `./controllers/path/of/the/FileController.ts` for controllers. The route will be `http://localhost:3000/path/of/the/file`
+- `./middleswares/path/of/the/FileMiddleware.ts` for middlewares 
+
 ### EJS 
 
 To use EJS you can add this on your app.ts

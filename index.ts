@@ -2,7 +2,7 @@ import {GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping} from '
 import {Controller} from './decorators/Controller'
 import {app, router} from './engine/global'
 import {showAllRoutes} from './utils/showAll'
-import express, { NextFunction } from 'express';
+import express from 'express';
 import { MiddlewareController, MiddlewareRoute } from './decorators/Middleware';
 import MiddlewareModel from './interfaces/MiddlewareModel';
 
@@ -60,6 +60,7 @@ class Morest {
 
 type Request = express.Request;
 type Response = express.Response;
+type NextFunction = express.NextFunction;
 
-export {GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping, Controller, Request, Response, MiddlewareRoute, MiddlewareController, MiddlewareModel}
+export {GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping, Controller, Request, Response, NextFunction, MiddlewareRoute, MiddlewareController, MiddlewareModel}
 export default Morest;

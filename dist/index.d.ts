@@ -19,5 +19,6 @@ declare class Morest {
 }
 declare type Request = express.Request;
 declare type Response = express.Response;
-export { GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping, Controller, Request, Response, MiddlewareRoute, MiddlewareController, MiddlewareModel };
+declare type NextFunction = express.NextFunction;
+export { GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping, Controller, Request, Response, NextFunction, MiddlewareRoute, MiddlewareController, MiddlewareModel };
 export default Morest;
