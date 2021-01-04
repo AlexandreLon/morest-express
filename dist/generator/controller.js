@@ -68,21 +68,21 @@ function generateModel(controllerName, path, resource) {
     const content = resource ? modelResource(controllerName, path) : modelEmpty(controllerName, path);
     return content;
 }
-function generateController(name, resource) {
+function generateController(name, resource, folder) {
     const splitted = name.split('.');
     const end = splitted.pop();
     const controllerName = ((str) => str.charAt(0).toUpperCase() + str.slice(1) + 'Controller')(end);
     const pathArray = splitted;
     const pathname = pathArray.join('/');
     const model = generateModel(controllerName, pathname + '/' + end, resource);
-    const directory = path_1.default.join(process.cwd(), '/controllers/' + pathname);
+    const src = folder === undefined ? '/controllers/' : '/' + folder + '/controllers/';
+    const directory = path_1.default.join(process.cwd(), src + pathname);
     const file = ((dir) => {
         if (dir.substr(dir.length - 1) != '/')
             return dir + '/';
         else
             return dir;
     })(directory) + controllerName + '.ts';
-    console.log(file);
     fs_1.default.mkdirSync(directory, { recursive: true });
     fs_1.default.writeFileSync(file, model);
 }

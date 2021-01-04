@@ -1,7 +1,7 @@
 import MiddlewareModel from '../interfaces/MiddlewareModel';
 interface IMiddlewareModel {
-    new (): MiddlewareModel;
+    new (params?: any): MiddlewareModel;
 }
-declare function MiddlewareRoute(MiddlewareModelClass: IMiddlewareModel): (Class: any, attribute: string) => void;
-declare function MiddlewareController(MiddlewareModelClass: IMiddlewareModel): (Constructor: any) => void;
+declare function MiddlewareRoute(MiddlewareModelClass: IMiddlewareModel, params?: any): (Class: any, attribute: string) => void;
+declare function MiddlewareController(MiddlewareModelClass: IMiddlewareModel, params?: any): (Constructor: any) => void;
 export { MiddlewareController, MiddlewareRoute };

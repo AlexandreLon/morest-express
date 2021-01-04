@@ -26,7 +26,9 @@ class Morest {
     use(handle: any|IMiddlewareModel) {
         try {
             const MiddlewareModel = handle as IMiddlewareModel;
-            app.use(new MiddlewareModel().run)
+            app.use((req, res, next) => {
+                return new MiddlewareModel().run(req, res, next)
+            })
         } catch(e) {
             const h = handle as NextFunction;
             app.use(h)

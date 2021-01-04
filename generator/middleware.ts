@@ -12,7 +12,7 @@ export default class ${middlewareName} extends MiddlewareModel {
 }`
 }
 
-function generateMiddleware(name: string) {
+function generateMiddleware(name: string, folder: string) {
     const splitted = name.split('.');
     const end = splitted.pop();
     const middlewareName = ((str: string): string => str.charAt(0).toUpperCase() + str.slice(1) + 'Middleware')(end)
@@ -21,7 +21,8 @@ function generateMiddleware(name: string) {
 
     const model = generateModel(middlewareName);
 
-    const directory = path.join(process.cwd(), '/middleswares/' + pathname)
+    const src = folder === undefined ? '/middlewares/' : '/' + folder + '/middlewares/'
+    const directory = path.join(process.cwd(), src + pathname)
     const file = ((dir: string) => {
         if(dir.substr(dir.length - 1) != '/') return dir + '/'
         else return dir;

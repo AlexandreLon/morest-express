@@ -10,12 +10,16 @@ const args = arg({
     '--middleware':     String,      
     '--controller':     String,      
     '--resources':      Boolean,      
+    '--src':            Boolean,
+    '--folder':         String,
  
     // Aliases
     '-w':        '--middleware',
     '-c':        '--controller',    
     '-r':        '--resources',    
-    '-h':        '--help'     
+    '-h':        '--help',     
+    '-s':        '--src',
+    '-f':        '--folder'     
 });
 
 if(args["--help"])
@@ -33,6 +37,8 @@ if(args["--help"])
 const middleware = args["--middleware"]
 const controller = args["--controller"]
 const resources = args["--resources"]
+const src = args["--src"]
+let folder = args["--folder"]
 
 if(controller !== undefined && middleware !== undefined) {
     console.error("You can't use flag middleware and controller at the same time")
@@ -44,11 +50,18 @@ if(controller === undefined && middleware === undefined) {
     exit(0)
 }
 
+if(folder !== undefined && !src) {
+    console.error("You can't use flag folder please specify --src flag to change source directory")
+    exit(-1)
+}
+
+if(folder === undefined && src) folder = 'src'
+
 if(controller !== undefined) {
-    generateController(controller, resources)
+    generateController(controller, resources, folder)
     exit(0)
 } else {
-    generateMiddleware(middleware)
+    generateMiddleware(middleware, folder)
     exit(0)
 }
 

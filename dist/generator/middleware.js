@@ -16,14 +16,15 @@ export default class ${middlewareName} extends MiddlewareModel {
     }
 }`;
 }
-function generateMiddleware(name) {
+function generateMiddleware(name, folder) {
     const splitted = name.split('.');
     const end = splitted.pop();
     const middlewareName = ((str) => str.charAt(0).toUpperCase() + str.slice(1) + 'Middleware')(end);
     const pathArray = splitted;
     const pathname = pathArray.join('/');
     const model = generateModel(middlewareName);
-    const directory = path_1.default.join(process.cwd(), '/middleswares/' + pathname);
+    const src = folder === undefined ? '/middlewares/' : '/' + folder + '/middlewares/';
+    const directory = path_1.default.join(process.cwd(), src + pathname);
     const file = ((dir) => {
         if (dir.substr(dir.length - 1) != '/')
             return dir + '/';

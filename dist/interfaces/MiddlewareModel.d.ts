@@ -1,4 +1,7 @@
 import express from 'express';
-export default interface MiddlewareModel {
-    run(req: express.Request, res: express.Response, next: express.NextFunction): any;
+export default abstract class MiddlewareModel {
+    private _params;
+    constructor(params?: any);
+    get params(): any;
+    abstract run(req: express.Request, res: express.Response, next: express.NextFunction): any;
 }

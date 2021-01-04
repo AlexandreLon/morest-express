@@ -14,11 +14,15 @@ const args = arg_1.default({
     '--middleware': String,
     '--controller': String,
     '--resources': Boolean,
+    '--src': Boolean,
+    '--folder': String,
     // Aliases
     '-w': '--middleware',
     '-c': '--controller',
     '-r': '--resources',
-    '-h': '--help'
+    '-h': '--help',
+    '-s': '--src',
+    '-f': '--folder'
 });
 if (args["--help"]) {
     console.log("Usage: morest-express [options]");
@@ -33,6 +37,8 @@ if (args["--help"]) {
 const middleware = args["--middleware"];
 const controller = args["--controller"];
 const resources = args["--resources"];
+const src = args["--src"];
+let folder = args["--folder"];
 if (controller !== undefined && middleware !== undefined) {
     console.error("You can't use flag middleware and controller at the same time");
     process_1.exit(-1);
@@ -41,11 +47,17 @@ if (controller === undefined && middleware === undefined) {
     console.log("No action specified. End...");
     process_1.exit(0);
 }
+if (folder !== undefined && !src) {
+    console.error("You can't use flag folder please specify --src flag to change source directory");
+    process_1.exit(-1);
+}
+if (folder === undefined && src)
+    folder = 'src';
 if (controller !== undefined) {
-    controller_1.generateController(controller, resources);
+    controller_1.generateController(controller, resources, folder);
     process_1.exit(0);
 }
 else {
-    middleware_1.generateMiddleware(middleware);
+    middleware_1.generateMiddleware(middleware, folder);
     process_1.exit(0);
 }

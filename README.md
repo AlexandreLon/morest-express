@@ -129,8 +129,43 @@ morest.run(3000, () => {
     console.log("Listening at 3000")
 })
 
-
 ```
+
+You can add params to pass it inside Middleware like this
+
+Middleware : 
+
+```ts
+import { MiddlewareModel, Request, Response, NextFunction } from 'morest-express';
+
+class HelloMiddleware implements MiddlewareModel {
+
+    run(req: Request, res: Response, next: NextFunction) {
+        console.log(this.params) // {foo: bar}
+        const params = this.params as {foo: string}
+        console.log(params.foo) // "bar"
+        next()
+    }
+
+}
+```
+
+Route : 
+
+```ts
+import Morest, {MiddlewareRoute, GetMapping, Controller, Request, Response} from 'morest-express'
+
+@Controller('/api')
+class IndexController {
+​
+    @MiddlewareRoute(HelloMiddleware, {foo: "bar"})
+    @GetMapping('/')
+    index(req: Request, res: Response) {
+        res.send("Hello World!")
+    }
+}
+```
+
 
 ### List of decorators
 
@@ -143,8 +178,8 @@ morest.run(3000, () => {
 | PutMapping    | @PutMapping(path) | Set a function as route put. The path is optionnal and default value is '/'
 | PatchMapping    | @PatchMapping(path) | Set a function as route patch. The path is optionnal and default value is '/'
 | DeleteMapping    | @DeleteMapping(path) | Set a function as route delete. The path is optionnal and default value is '/'
-| MiddlewareController | @MiddlewareController(Middleware) | Set a middle on the controller, each route will have a middleware. The middleware must be a class inheritance MiddlewareModel 
-| MiddlewareRoute | @MiddlewareRoute(Middleware) | Set a middle on the route. The middleware must be a class inheritance MiddlewareModel 
+| MiddlewareController | @MiddlewareController(Middleware, params) | Set a middle on the controller, each route will have a middleware. The middleware must be a class inheritance MiddlewareModel. Params is list of params will be accessible by `this.params` from Middleware class 
+| MiddlewareRoute | @MiddlewareRoute(Middleware, params) | Set a middle on the route. The middleware must be a class inheritance MiddlewareModel. Params is list of params will be accessible by `this.params` from Middleware class 
 
 ### Morest-cli
 
@@ -185,6 +220,20 @@ The path must be like `path.of.the.file`
 Will be generate :
 - `./controllers/path/of/the/FileController.ts` for controllers. The route will be `http://localhost:3000/path/of/the/file`
 - `./middleswares/path/of/the/FileMiddleware.ts` for middlewares 
+
+You can use --src to change the source directory, by default it's `./src` and with --folder too you can specify other folder 
+
+```bash
+$ npx morest-express --middleware path.of.file --src
+```
+
+Will be generate at `./src/middleswares/path/of/the/FileMiddleware.ts`
+
+```bash
+$ npx morest-express --middleware path.of.file --src --folder code
+```
+
+Will be generate at `./code/middleswares/path/of/the/FileMiddleware.ts`
 
 ### EJS 
 

@@ -67,7 +67,7 @@ function generateModel(controllerName: string, path: string, resource: boolean) 
     return content;
 }
 
-function generateController(name: string, resource: boolean) {
+function generateController(name: string, resource: boolean, folder: string) {
     const splitted = name.split('.');
     const end = splitted.pop();
     const controllerName = ((str: string): string => str.charAt(0).toUpperCase() + str.slice(1) + 'Controller')(end)
@@ -76,7 +76,8 @@ function generateController(name: string, resource: boolean) {
 
     const model = generateModel(controllerName, pathname + '/' + end, resource);
 
-    const directory = path.join(process.cwd(), '/controllers/' + pathname)
+    const src = folder === undefined ? '/controllers/' : '/' + folder + '/controllers/'
+    const directory = path.join(process.cwd(), src + pathname)
     const file = ((dir: string) => {
         if(dir.substr(dir.length - 1) != '/') return dir + '/'
         else return dir;

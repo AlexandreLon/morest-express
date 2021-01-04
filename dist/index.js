@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MiddlewareController = exports.MiddlewareRoute = exports.Controller = exports.RouteMapping = exports.DeleteMapping = exports.PostMapping = exports.PutMapping = exports.GetMapping = void 0;
+exports.MiddlewareModel = exports.MiddlewareController = exports.MiddlewareRoute = exports.Controller = exports.RouteMapping = exports.DeleteMapping = exports.PostMapping = exports.PutMapping = exports.GetMapping = void 0;
 const Route_1 = require("./decorators/Route");
 Object.defineProperty(exports, "GetMapping", { enumerable: true, get: function () { return Route_1.GetMapping; } });
 Object.defineProperty(exports, "PutMapping", { enumerable: true, get: function () { return Route_1.PutMapping; } });
@@ -14,6 +17,8 @@ const showAll_1 = require("./utils/showAll");
 const Middleware_1 = require("./decorators/Middleware");
 Object.defineProperty(exports, "MiddlewareController", { enumerable: true, get: function () { return Middleware_1.MiddlewareController; } });
 Object.defineProperty(exports, "MiddlewareRoute", { enumerable: true, get: function () { return Middleware_1.MiddlewareRoute; } });
+const MiddlewareModel_1 = __importDefault(require("./interfaces/MiddlewareModel"));
+exports.MiddlewareModel = MiddlewareModel_1.default;
 class Morest {
     constructor() {
         this.app = global_1.app;
