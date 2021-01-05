@@ -11,9 +11,12 @@ interface IMiddlewareModel {
     new (): MiddlewareModel;
 }
 declare class Morest {
-    app: import("express-serve-static-core").Express;
+    _app: express.Application;
+    constructor(app?: express.Application);
+    get app(): express.Application;
     set(name: string, value: any): void;
-    use(handle: any | IMiddlewareModel): void;
+    use(handle: any): void;
+    useMiddleware(handle: IMiddlewareModel): void;
     run(options?: Options | string | number, callback?: () => void): void;
     showAllRoutes(): string[];
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.2
+- Minor fix use function is now separate with useMiddleware for customs middleware
+- Preparing new module morest-auth
+
 ## Version 1.1.1
 
 - Fix bad generator 

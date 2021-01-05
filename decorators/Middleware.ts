@@ -1,5 +1,5 @@
 import express from 'express';
-import { app, bases, routes } from '../engine/global';
+import { middlewares, bases, routes } from '../engine/global';
 import { NotControllerException } from '../errors/NotControllerException';
 import MiddlewareModel from '../interfaces/MiddlewareModel';
 
@@ -10,9 +10,9 @@ interface IMiddlewareModel {
 function use(middlewareModel: MiddlewareModel, path: string) {
 	if (middlewareModel == null) return;
 
-	app.use(path, (req, res, next) => {
-		middlewareModel.run(req, res, next);
-	});
+	// middlewares.push({path, callback: (req, res, next) => {
+	// 	middlewareModel.run(req, res, next);
+	// }});
 }
 
 function MiddlewareRoute(MiddlewareModelClass: IMiddlewareModel, params?: any) {

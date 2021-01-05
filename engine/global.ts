@@ -4,6 +4,9 @@ import express from 'express';
 const routes: { [name: string]: Route[] } = {};
 const bases: {[name: string]: string} = {};
 const router = express.Router();
-const app = express()
+const middlewares: {
+    path: string
+    callback: (req, res, next) => void
+}[] = []
 
-export {routes, bases, router, app}
+export {routes, bases, router, middlewares}

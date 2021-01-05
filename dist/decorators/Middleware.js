@@ -6,9 +6,9 @@ const NotControllerException_1 = require("../errors/NotControllerException");
 function use(middlewareModel, path) {
     if (middlewareModel == null)
         return;
-    global_1.app.use(path, (req, res, next) => {
-        middlewareModel.run(req, res, next);
-    });
+    // middlewares.push({path, callback: (req, res, next) => {
+    // 	middlewareModel.run(req, res, next);
+    // }});
 }
 function MiddlewareRoute(MiddlewareModelClass, params) {
     return function (Class, attribute) {

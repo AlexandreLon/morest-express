@@ -1,6 +1,6 @@
 import {GetMapping, PutMapping, PostMapping, DeleteMapping, RouteMapping} from './decorators/Route'
 import {Controller} from './decorators/Controller'
-import {app, router} from './engine/global'
+import {middlewares, router} from './engine/global'
 import {showAllRoutes} from './utils/showAll'
 import express from 'express';
 import { MiddlewareController, MiddlewareRoute } from './decorators/Middleware';
@@ -17,22 +17,34 @@ interface IMiddlewareModel {
 
 class Morest {
 
-    app = app
+    _app: express.Application
+
+    constructor(app?: express.Application) {
+        if(app) {
+            this._app = app
+        } else {
+            this._app = express()
+        }
+    }
+
+    get app() {
+        return this._app
+    }
 
     set(name: string, value: any) {
         this.app.set(name, value)
     }
 
-    use(handle: any|IMiddlewareModel) {
-        try {
-            const MiddlewareModel = handle as IMiddlewareModel;
-            app.use((req, res, next) => {
-                return new MiddlewareModel().run(req, res, next)
-            })
-        } catch(e) {
-            const h = handle as NextFunction;
-            app.use(h)
-        }
+    use(handle: any) {
+        const h = handle as NextFunction;
+            this.app.use(h)
+    }
+
+    useMiddleware(handle: IMiddlewareModel) {
+        const MiddlewareModel = handle as IMiddlewareModel;
+        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+            new MiddlewareModel().run(req, res, next)
+        })
     }
 
     run(options?: Options|string|number, callback?: () => void) {
@@ -52,6 +64,9 @@ class Morest {
             if(options.callback != undefined && options.callback != null) cb = callback
         }
         this.app.use(router)
+        middlewares.forEach(e => {
+            this.app.use(e.path, e.callback)
+        })
         this.app.listen(port, cb)
     }
 

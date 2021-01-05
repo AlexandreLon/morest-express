@@ -6,5 +6,8 @@ declare const bases: {
     [name: string]: string;
 };
 declare const router: import("express-serve-static-core").Router;
-declare const app: import("express-serve-static-core").Express;
-export { routes, bases, router, app };
+declare const middlewares: {
+    path: string;
+    callback: (req: any, res: any, next: any) => void;
+}[];
+export { routes, bases, router, middlewares };
